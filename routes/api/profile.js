@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const auth = require("../../middleware/auth")
 const Profile = require("../../models/Profile")
-const User = require("../../models/User")
 const {check, validationResult} = require('express-validator')
 //@route get api/profile/me
 //@desc test route
@@ -185,6 +184,7 @@ router.put('/experience', [auth, [
 //@route DELETE api/profile/exprerience/:exp_id
 //@desc delete experience from profile
 //@access private
+//asdasd
 router.delete('/experience/:exp_id', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({user: req.user.id});
