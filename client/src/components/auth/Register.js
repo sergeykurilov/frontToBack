@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {setAlert} from "../../actions/alert"
 import {connect} from "react-redux";
+import propType from "prop-types"
+import {register} from "../../actions/auth"
 
-const Register = ({setAlert}) => {
+const Register = ({setAlert, register}) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -18,14 +20,16 @@ const Register = ({setAlert}) => {
         if (password !== password2) {
             setAlert('Password do not match', 'danger')
         } else {
-            console.log("SUCCESS")
+            register({
+                name, email, password
+            })
         }
     }
 
     return (
         <>
             <h1 className="large text-primary">Sign Up</h1>
-            <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
+            <p className="lead"><i className="fas fa-user"/> Create Your Account</p>
             <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                     <input type="text" placeholder="Name" onChange={e => onChange(e)} value={name} name="name"
@@ -68,4 +72,10 @@ const Register = ({setAlert}) => {
     );
 };
 
-export default connect(null, {setAlert})(Register);
+
+Register.propTypes = {
+    setAlert: propType.func.isRequired,
+    register: propType.func.isRequired,
+}
+
+export default connect(null, {setAlert, register})(Register);
