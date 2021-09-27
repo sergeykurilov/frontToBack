@@ -1,6 +1,15 @@
 //Register user
 import axios from "axios";
-import {AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED} from "./types";
+import {
+    AUTH_ERROR,
+    CLEAR_PROFILE,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    LOGOUT,
+    REGISTER_FAIL,
+    REGISTER_SUCCESS,
+    USER_LOADED
+} from "./types";
 import {setAlert} from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 
@@ -83,5 +92,8 @@ export const register = ({name, email, password}) => async dispatch => {
 //logout//clear profile
 
 export const logout = () => dispatch => {
+    dispatch({type: CLEAR_PROFILE})
     dispatch({type: LOGOUT})
 }
+
+//clear profile
