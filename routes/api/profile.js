@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const auth = require("../../middleware/auth")
 const Profile = require("../../models/Profile")
+const User = require("../../models/User")
+const Post = require("../../models/Post")
 const request = require("request")
 const config = require("config")
 const {check, validationResult} = require('express-validator')
@@ -67,7 +69,7 @@ router.post('/', [auth,
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
-        profileFields.skills = skills.split(',').map(skill => skill.trim())
+        profileFields.skills = skills.toString().split(',').map(skill => skill.trim())
     }
     profileFields.social = {};
     if (youtube) profileFields.social.youtube = youtube;
@@ -203,6 +205,22 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
         res.status(500).send("Server error: " + e.message)
     }
 })
+
+//@route delete api/profile/
+//@desc delete profile
+//@access private
+router.delete('/', auth, async (req, res) => {
+        try {
+            await Post.deleteMany({user: req.user.id})
+            await Profile.findOneAndRemove({user: req.user.id})
+            await User.findOneAndRemove({user: req.user.id})
+            res.json({msg: 'User deleted successfully'})
+        } catch (e) {
+            console.error(err)
+            res.status(500).send("Server error: " + err.message)
+        }
+    }
+)
 
 
 //@route PUT api/profile/education
