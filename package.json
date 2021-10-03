@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Social Network ",
   "main": "index.js",
+  "engines": {
+    "node": "16.9.1"
+  },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
